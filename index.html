@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klinik Demo Sejahtera — Situs Demo</title>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; color: #1c2733; line-height: 1.6; }
+  header { background: #0e5a4a; color: #fff; padding: 28px 20px; }
+  header h1 { margin: 0 0 6px; font-size: 1.6rem; }
+  header p { margin: 0; opacity: .92; }
+  .demo { background: #fff3cd; border-bottom: 3px solid #e0a800; padding: 12px 20px; font-weight: 600; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; }
+  h2 { color: #0e5a4a; margin-top: 36px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #cfd8dc; padding: 10px; text-align: left; }
+  th { background: #eef4f2; }
+  .card { border: 1px solid #cfd8dc; border-radius: 10px; padding: 16px; margin: 12px 0; }
+  label { display: block; margin: 10px 0 4px; font-weight: 600; }
+  input, select { width: 100%; padding: 10px; border: 1px solid #b0bec5; border-radius: 6px; font-size: 1rem; }
+  button { background: #0e5a4a; color: #fff; border: 0; border-radius: 6px; padding: 12px 20px; font-size: 1rem; margin-top: 14px; cursor: pointer; }
+  code { background: #f2f4f5; padding: 2px 6px; border-radius: 4px; }
+  .hasil { background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px; padding: 14px; margin-top: 16px; display: none; }
+  footer { border-top: 1px solid #cfd8dc; padding: 20px; text-align: center; color: #546e7a; font-size: .9rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Klinik Demo Sejahtera</h1>
+  <p>Klinik fiktif di Bandung — dibuat sebagai bahan latihan, bukan klinik sungguhan.</p>
+</header>
+<div class="demo">DEMO — Semua nama, dokter, jadwal, dan harga di situs ini fiktif. Tidak ada pasien sungguhan dan tidak ada pembayaran sungguhan.</div>
+<main>
+  <h2>Layanan dan tarif demo</h2>
+  <table>
+    <tr><th>Layanan</th><th>Tarif demo</th><th>Keterangan</th></tr>
+    <tr><td>Konsultasi Umum</td><td>Rp50.000</td><td>Senin–Sabtu, 08.00–16.00</td></tr>
+    <tr><td>Konsultasi Gigi</td><td>Rp75.000</td><td>Senin, Rabu, Jumat, 09.00–15.00</td></tr>
+    <tr><td>Imunisasi Anak</td><td>Rp100.000</td><td>Selasa dan Kamis, 08.00–12.00</td></tr>
+  </table>
+
+  <h2>Dokter demo</h2>
+  <div class="card"><strong>dr. Ayu Contoh</strong> — Dokter Umum<br>Senin–Sabtu, 08.00–16.00</div>
+  <div class="card"><strong>dr. Budi Percobaan</strong> — Dokter Gigi<br>Senin, Rabu, Jumat, 09.00–15.00</div>
+  <div class="card"><strong>dr. Sari Simulasi</strong> — Dokter Anak<br>Selasa dan Kamis, 08.00–12.00</div>
+
+  <h2>Buat janji temu demo</h2>
+  <p>Formulir ini hanya simulasi di browser Anda. Tidak ada data yang dikirim ke mana pun dan tidak ada janji yang benar-benar tercatat.</p>
+  <form id="booking">
+    <label for="nama">Nama (boleh nama samaran)</label>
+    <input id="nama" required>
+    <label for="layanan">Layanan</label>
+    <select id="layanan">
+      <option>Konsultasi Umum — dr. Ayu Contoh</option>
+      <option>Konsultasi Gigi — dr. Budi Percobaan</option>
+      <option>Imunisasi Anak — dr. Sari Simulasi</option>
+    </select>
+    <label for="tanggal">Tanggal</label>
+    <input id="tanggal" type="date" required>
+    <button type="submit">Buat janji demo</button>
+  </form>
+  <div class="hasil" id="hasil"></div>
+
+  <h2>Untuk agen AI</h2>
+  <p>Situs ini menerbitkan dokumen discovery Personal Agent Protocol (Poppy) draft 0.1 di <code>/.well-known/poppy.json</code>. Agen pribadi bisa membaca dokumen itu untuk mengetahui cara masuk, cara sign-in, dan API demo yang tersedia. Penjelasan lengkapnya ada di <a href="agen.html">halaman agen</a>.</p>
+  <p>Dokumen discovery: <a href=".well-known/poppy.json">/.well-known/poppy.json</a> · Deskripsi API demo: <a href="openapi.json">openapi.json</a></p>
+
+  <h2>Alamat demo</h2>
+  <p>Jl. Contoh No. 1, Bandung (alamat fiktif) · Telepon 022-000-0000 (nomor fiktif, tidak aktif)</p>
+</main>
+<footer>
+  Klinik Demo Sejahtera — situs demo untuk latihan Personal Agent Protocol draft 0.1.<br>
+  Kode sumber: <a href="https://github.com/xien63/xien63.github.io">github.com/xien63/xien63.github.io</a>
+</footer>
+<script>
+document.getElementById('booking').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var kode = 'DEMO-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+  var hasil = document.getElementById('hasil');
+  hasil.style.display = 'block';
+  hasil.innerHTML = '<strong>Janji demo tercatat di browser Anda saja.</strong><br>Kode demo: <strong>' + kode + '</strong><br>' +
+    document.getElementById('layanan').value + ' · ' + document.getElementById('tanggal').value +
+    '<br>Ini simulasi. Tidak ada pembayaran dan tidak ada data yang dikirim.';
+});
+</script>
+</body>
+</html>
