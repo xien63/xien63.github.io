@@ -4,84 +4,308 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Klinik Demo Sejahtera — Situs Demo</title>
+<meta name="description" content="Klinik demo fiktif di Bandung. Lihat tarif dan jadwal dokter, cek layanan yang cocok, lalu buat janji demo dalam 1 menit. Tidak ada pembayaran sungguhan.">
 <style>
-  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; color: #1c2733; line-height: 1.6; }
-  header { background: #0e5a4a; color: #fff; padding: 28px 20px; }
-  header h1 { margin: 0 0 6px; font-size: 1.6rem; }
-  header p { margin: 0; opacity: .92; }
-  .demo { background: #fff3cd; border-bottom: 3px solid #e0a800; padding: 12px 20px; font-weight: 600; }
-  main { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; }
-  h2 { color: #0e5a4a; margin-top: 36px; }
-  table { border-collapse: collapse; width: 100%; }
-  th, td { border: 1px solid #cfd8dc; padding: 10px; text-align: left; }
+  :root {
+    --bg: #f7f5f0;
+    --ink: #1c2733;
+    --muted: #546e7a;
+    --teal: #0e5a4a;
+    --teal-dark: #0a453a;
+    --card: #ffffff;
+    --line: #d8dedd;
+    --accent: #c2410c;
+    --accent-dark: #9a3412;
+    --demo-bg: #fff3cd;
+    --demo-border: #e0a800;
+    --soft: #e8f5e9;
+  }
+  * { box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; color: var(--ink); line-height: 1.6; background: var(--bg); }
+  a { color: var(--teal); }
+  .demo { background: var(--demo-bg); border-bottom: 3px solid var(--demo-border); padding: 12px 20px; font-weight: 600; text-align: center; }
+  .topbar { background: var(--card); border-bottom: 1px solid var(--line); }
+  .topbar-inner { max-width: 960px; margin: 0 auto; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .brand { font-weight: 800; color: var(--teal); text-decoration: none; font-size: 1.05rem; }
+  .topbar nav a { font-size: .95rem; margin-left: 16px; }
+  .hero { position: relative; overflow: hidden; background: linear-gradient(180deg, #dff0eb 0%, var(--bg) 100%); }
+  .hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%; background: #bfe3d8; opacity: .55; }
+  .hero::before { width: 420px; height: 420px; right: -140px; top: -160px; }
+  .hero::after { width: 260px; height: 260px; left: -110px; bottom: -140px; background: #d8ece4; }
+  .hero-inner { position: relative; max-width: 960px; margin: 0 auto; padding: 56px 20px 96px; }
+  .eyebrow { font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: .82rem; color: var(--teal); margin: 0 0 12px; }
+  h1 { margin: 0 0 14px; font-size: 2.1rem; line-height: 1.2; max-width: 640px; }
+  .hero p.lead { margin: 0 0 22px; font-size: 1.12rem; max-width: 620px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .btn-primary { display: inline-block; background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 14px 24px; font-size: 1.05rem; font-weight: 700; text-decoration: none; cursor: pointer; box-shadow: 0 8px 20px rgba(194, 65, 12, .28); }
+  .btn-primary:hover { background: var(--accent-dark); }
+  .btn-primary:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--teal); outline-offset: 2px; }
+  .link-secondary { font-weight: 700; }
+  .trust { margin: 22px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--muted); font-size: .95rem; }
+  main { max-width: 960px; margin: 0 auto; padding: 0 20px 48px; }
+  .booking-card { position: relative; z-index: 2; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; margin-top: -64px; box-shadow: 0 16px 40px rgba(28, 39, 51, .14); }
+  .booking-card h2 { margin-top: 0; }
+  h2 { color: var(--teal); margin-top: 40px; font-size: 1.45rem; line-height: 1.3; }
+  h3 { margin: 0 0 6px; font-size: 1.1rem; }
+  .section-note { color: var(--muted); margin-top: -6px; }
+  table { border-collapse: collapse; width: 100%; background: var(--card); }
+  th, td { border: 1px solid var(--line); padding: 10px; text-align: left; }
   th { background: #eef4f2; }
-  .card { border: 1px solid #cfd8dc; border-radius: 10px; padding: 16px; margin: 12px 0; }
-  label { display: block; margin: 10px 0 4px; font-weight: 600; }
-  input, select { width: 100%; padding: 10px; border: 1px solid #b0bec5; border-radius: 6px; font-size: 1rem; }
-  button { background: #0e5a4a; color: #fff; border: 0; border-radius: 6px; padding: 12px 20px; font-size: 1rem; margin-top: 14px; cursor: pointer; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+  .card p { margin: 6px 0; }
+  .price { font-weight: 800; font-size: 1.15rem; }
+  .btn-ghost { display: inline-block; margin-top: 10px; background: var(--card); color: var(--teal); border: 2px solid var(--teal); border-radius: 8px; padding: 10px 16px; font-size: 1rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+  .btn-ghost:hover { background: #eef4f2; }
+  label { display: block; margin: 12px 0 4px; font-weight: 600; }
+  input, select { width: 100%; padding: 11px; border: 1px solid #b0bec5; border-radius: 8px; font-size: 1rem; background: #fff; }
+  button.btn-primary[type="submit"] { margin-top: 16px; }
   code { background: #f2f4f5; padding: 2px 6px; border-radius: 4px; }
-  .hasil { background: #e8f5e9; border: 1px solid #81c784; border-radius: 8px; padding: 14px; margin-top: 16px; display: none; }
-  footer { border-top: 1px solid #cfd8dc; padding: 20px; text-align: center; color: #546e7a; font-size: .9rem; }
+  .hasil { background: var(--soft); border: 1px solid #81c784; border-radius: 8px; padding: 14px; margin-top: 16px; display: none; }
+  .quiz { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+  .quiz-step { color: var(--muted); font-weight: 700; font-size: .92rem; }
+  .quiz-options { display: grid; gap: 10px; margin-top: 14px; }
+  .quiz-options button { text-align: left; background: #fff; border: 2px solid var(--line); border-radius: 10px; padding: 14px 16px; font-size: 1rem; cursor: pointer; }
+  .quiz-options button:hover { border-color: var(--teal); background: #f2f8f6; }
+  .quiz-back { background: none; border: 0; color: var(--teal); font-weight: 700; cursor: pointer; padding: 8px 0 0; font-size: .95rem; }
+  .quiz-result { display: none; background: #f2f8f6; border: 1px solid #bfe3d8; border-radius: 10px; padding: 18px; margin-top: 16px; }
+  .quiz-result .price { font-size: 1.25rem; }
+  .counter { display: flex; align-items: center; gap: 12px; margin: 14px 0 4px; }
+  .counter button { width: 40px; height: 40px; border: 2px solid var(--teal); background: #fff; color: var(--teal); border-radius: 8px; font-size: 1.2rem; font-weight: 800; cursor: pointer; }
+  .counter strong { font-size: 1.1rem; min-width: 90px; text-align: center; }
+  .fine { font-size: .9rem; color: var(--muted); }
+  .reveal { opacity: 0; transform: translateY(12px); transition: opacity .4s ease, transform .4s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  footer { border-top: 1px solid var(--line); padding: 20px; text-align: center; color: var(--muted); font-size: .9rem; background: var(--card); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+  @media (max-width: 640px) {
+    h1 { font-size: 1.65rem; }
+    .hero-inner { padding: 40px 20px 88px; }
+    .topbar nav a { margin-left: 10px; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>Klinik Demo Sejahtera</h1>
-  <p>Klinik fiktif di Bandung — dibuat sebagai bahan latihan, bukan klinik sungguhan.</p>
+<div class="demo">DEMO. Semua nama, dokter, jadwal, dan harga di situs ini fiktif. Tidak ada pasien sungguhan dan tidak ada pembayaran sungguhan.</div>
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">Klinik Demo Sejahtera</a>
+    <nav><a href="#cek-layanan">Cek layanan</a><a href="agen.html">Untuk agen AI</a></nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Klinik demo di Bandung</p>
+    <h1>Konsultasi dokter tanpa antre lama. Jadwalnya jelas sebelum kamu datang.</h1>
+    <p class="lead">Untuk warga Bandung yang butuh Konsultasi Umum, Konsultasi Gigi, atau Imunisasi Anak. Lihat tarif demo dan jadwal dokter dulu, lalu buat janji demo dalam 1 menit.</p>
+    <div class="cta-row">
+      <a class="btn-primary" href="#booking">Buat janji demo</a>
+      <a class="link-secondary" href="#cek-layanan">Cek layanan yang cocok dulu</a>
+    </div>
+    <ul class="trust">
+      <li>Tarif demo jelas di depan</li>
+      <li>Jadwal dokter terlihat sebelum booking</li>
+      <li>Tidak ada pembayaran sungguhan</li>
+    </ul>
+  </div>
 </header>
-<div class="demo">DEMO — Semua nama, dokter, jadwal, dan harga di situs ini fiktif. Tidak ada pasien sungguhan dan tidak ada pembayaran sungguhan.</div>
+
 <main>
-  <h2>Layanan dan tarif demo</h2>
-  <table>
-    <tr><th>Layanan</th><th>Tarif demo</th><th>Keterangan</th></tr>
-    <tr><td>Konsultasi Umum</td><td>Rp50.000</td><td>Senin–Sabtu, 08.00–16.00</td></tr>
-    <tr><td>Konsultasi Gigi</td><td>Rp75.000</td><td>Senin, Rabu, Jumat, 09.00–15.00</td></tr>
-    <tr><td>Imunisasi Anak</td><td>Rp100.000</td><td>Selasa dan Kamis, 08.00–12.00</td></tr>
-  </table>
+  <section class="booking-card" id="booking-card" aria-labelledby="judul-booking">
+    <h2 id="judul-booking">Buat janji temu demo</h2>
+    <p class="section-note">Formulir demo, 1 menit. Tidak ada data yang dikirim ke mana pun dan tidak ada janji yang benar-benar tercatat.</p>
+    <form id="booking">
+      <label for="nama">Nama (boleh nama samaran)</label>
+      <input id="nama" required autocomplete="name">
+      <label for="layanan">Layanan</label>
+      <select id="layanan">
+        <option>Konsultasi Umum — dr. Ayu Contoh</option>
+        <option>Konsultasi Gigi — dr. Budi Percobaan</option>
+        <option>Imunisasi Anak — dr. Sari Simulasi</option>
+      </select>
+      <label for="tanggal">Tanggal</label>
+      <input id="tanggal" type="date" required>
+      <button class="btn-primary" type="submit">Buat janji demo</button>
+    </form>
+    <div class="hasil" id="hasil" aria-live="polite"></div>
+  </section>
 
-  <h2>Dokter demo</h2>
-  <div class="card"><strong>dr. Ayu Contoh</strong> — Dokter Umum<br>Senin–Sabtu, 08.00–16.00</div>
-  <div class="card"><strong>dr. Budi Percobaan</strong> — Dokter Gigi<br>Senin, Rabu, Jumat, 09.00–15.00</div>
-  <div class="card"><strong>dr. Sari Simulasi</strong> — Dokter Anak<br>Selasa dan Kamis, 08.00–12.00</div>
+  <section aria-labelledby="judul-cek" id="cek-layanan" class="reveal">
+    <h2 id="judul-cek">Cek layanan yang cocok dalam 30 detik</h2>
+    <p class="section-note">Jawab 3 pertanyaan singkat. Kamu langsung lihat layanan, dokter, jadwal, dan estimasi biaya demo. Ini hanya mengarahkan ke layanan, bukan diagnosis.</p>
+    <div class="quiz">
+      <div id="quiz-tanya">
+        <p class="quiz-step" id="quiz-langkah">Langkah 1 dari 3</p>
+        <h3 id="quiz-judul">Untuk siapa layanan ini?</h3>
+        <div class="quiz-options" id="quiz-opsi"></div>
+        <button class="quiz-back" id="quiz-kembali" type="button" hidden>Kembali ke pertanyaan sebelumnya</button>
+      </div>
+      <div class="quiz-result" id="quiz-hasil" aria-live="polite"></div>
+      <p class="fine">Kalau darurat, langsung ke IGD. Kuis demo ini tidak menggantikan penilaian dokter.</p>
+    </div>
+  </section>
 
-  <h2>Buat janji temu demo</h2>
-  <p>Formulir ini hanya simulasi di browser Anda. Tidak ada data yang dikirim ke mana pun dan tidak ada janji yang benar-benar tercatat.</p>
-  <form id="booking">
-    <label for="nama">Nama (boleh nama samaran)</label>
-    <input id="nama" required>
-    <label for="layanan">Layanan</label>
-    <select id="layanan">
-      <option>Konsultasi Umum — dr. Ayu Contoh</option>
-      <option>Konsultasi Gigi — dr. Budi Percobaan</option>
-      <option>Imunisasi Anak — dr. Sari Simulasi</option>
-    </select>
-    <label for="tanggal">Tanggal</label>
-    <input id="tanggal" type="date" required>
-    <button type="submit">Buat janji demo</button>
-  </form>
-  <div class="hasil" id="hasil"></div>
+  <section aria-labelledby="judul-layanan">
+    <h2 id="judul-layanan">Layanan dan tarif demo</h2>
+    <table>
+      <tr><th>Layanan</th><th>Tarif demo</th><th>Keterangan</th></tr>
+      <tr><td>Konsultasi Umum</td><td>Rp50.000</td><td>Senin sampai Sabtu, 08.00 sampai 16.00</td></tr>
+      <tr><td>Konsultasi Gigi</td><td>Rp75.000</td><td>Senin, Rabu, Jumat, 09.00 sampai 15.00</td></tr>
+      <tr><td>Imunisasi Anak</td><td>Rp100.000</td><td>Selasa dan Kamis, 08.00 sampai 12.00</td></tr>
+    </table>
+    <div class="grid" style="margin-top: 14px;">
+      <div class="card">
+        <h3>Konsultasi Umum</h3>
+        <p class="price">Rp50.000</p>
+        <p>dr. Ayu Contoh. Senin sampai Sabtu, 08.00 sampai 16.00.</p>
+        <button class="btn-ghost" type="button" data-layanan="Konsultasi Umum — dr. Ayu Contoh">Pilih layanan ini</button>
+      </div>
+      <div class="card">
+        <h3>Konsultasi Gigi</h3>
+        <p class="price">Rp75.000</p>
+        <p>dr. Budi Percobaan. Senin, Rabu, Jumat, 09.00 sampai 15.00.</p>
+        <button class="btn-ghost" type="button" data-layanan="Konsultasi Gigi — dr. Budi Percobaan">Pilih layanan ini</button>
+      </div>
+      <div class="card">
+        <h3>Imunisasi Anak</h3>
+        <p class="price">Rp100.000</p>
+        <p>dr. Sari Simulasi. Selasa dan Kamis, 08.00 sampai 12.00.</p>
+        <button class="btn-ghost" type="button" data-layanan="Imunisasi Anak — dr. Sari Simulasi">Pilih layanan ini</button>
+      </div>
+    </div>
+  </section>
 
-  <h2>Untuk agen AI</h2>
-  <p>Situs ini menerbitkan dokumen discovery Personal Agent Protocol (Poppy) draft 0.1 di <code>/.well-known/poppy.json</code>. Agen pribadi bisa membaca dokumen itu untuk mengetahui cara masuk, cara sign-in, dan API demo yang tersedia. Penjelasan lengkapnya ada di <a href="agen.html">halaman agen</a>.</p>
-  <p>Dokumen discovery: <a href=".well-known/poppy.json">/.well-known/poppy.json</a> · Deskripsi API demo: <a href="openapi.json">openapi.json</a></p>
+  <section aria-labelledby="judul-dokter">
+    <h2 id="judul-dokter">Dokter demo</h2>
+    <div class="grid">
+      <div class="card"><strong>dr. Ayu Contoh</strong> — Dokter Umum<br>Senin sampai Sabtu, 08.00 sampai 16.00</div>
+      <div class="card"><strong>dr. Budi Percobaan</strong> — Dokter Gigi<br>Senin, Rabu, Jumat, 09.00 sampai 15.00</div>
+      <div class="card"><strong>dr. Sari Simulasi</strong> — Dokter Anak<br>Selasa dan Kamis, 08.00 sampai 12.00</div>
+    </div>
+  </section>
 
-  <h2>Alamat demo</h2>
-  <p>Jl. Contoh No. 1, Bandung (alamat fiktif) · Telepon 022-000-0000 (nomor fiktif, tidak aktif)</p>
+  <section aria-labelledby="judul-agen">
+    <h2 id="judul-agen">Untuk agen AI</h2>
+    <p>Situs ini menerbitkan dokumen discovery Personal Agent Protocol (Poppy) draft 0.1 di <code>/.well-known/poppy.json</code>. Agen pribadi bisa membaca dokumen itu untuk mengetahui cara masuk, cara sign-in, dan API demo yang tersedia. Penjelasan lengkapnya ada di <a href="agen.html">halaman agen</a>.</p>
+    <p>Dokumen discovery: <a href=".well-known/poppy.json">/.well-known/poppy.json</a> · Deskripsi API demo: <a href="openapi.json">openapi.json</a></p>
+    <p class="fine">Revisi tampilan ini hanya mengubah beranda. Dokumen discovery, metadata OAuth, dan API demo tidak diubah.</p>
+  </section>
+
+  <section aria-labelledby="judul-alamat">
+    <h2 id="judul-alamat">Alamat demo</h2>
+    <p>Jl. Contoh No. 1, Bandung (alamat fiktif) · Telepon 022-000-0000 (nomor fiktif, tidak aktif)</p>
+  </section>
 </main>
 <footer>
   Klinik Demo Sejahtera — situs demo untuk latihan Personal Agent Protocol draft 0.1.<br>
   Kode sumber: <a href="https://github.com/xien63/xien63.github.io">github.com/xien63/xien63.github.io</a>
 </footer>
 <script>
-document.getElementById('booking').addEventListener('submit', function (e) {
-  e.preventDefault();
-  var kode = 'DEMO-' + Math.random().toString(36).slice(2, 8).toUpperCase();
-  var hasil = document.getElementById('hasil');
-  hasil.style.display = 'block';
-  hasil.innerHTML = '<strong>Janji demo tercatat di browser Anda saja.</strong><br>Kode demo: <strong>' + kode + '</strong><br>' +
-    document.getElementById('layanan').value + ' · ' + document.getElementById('tanggal').value +
-    '<br>Ini simulasi. Tidak ada pembayaran dan tidak ada data yang dikirim.';
-});
+(function () {
+  var layananData = {
+    umum: { pilih: "Konsultasi Umum — dr. Ayu Contoh", nama: "Konsultasi Umum", dokter: "dr. Ayu Contoh, Dokter Umum", jadwal: "Senin sampai Sabtu, 08.00 sampai 16.00", tarif: 50000 },
+    gigi: { pilih: "Konsultasi Gigi — dr. Budi Percobaan", nama: "Konsultasi Gigi", dokter: "dr. Budi Percobaan, Dokter Gigi", jadwal: "Senin, Rabu, Jumat, 09.00 sampai 15.00", tarif: 75000 },
+    imunisasi: { pilih: "Imunisasi Anak — dr. Sari Simulasi", nama: "Imunisasi Anak", dokter: "dr. Sari Simulasi, Dokter Anak", jadwal: "Selasa dan Kamis, 08.00 sampai 12.00", tarif: 100000 }
+  };
+  function rupiah(n) { return "Rp" + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+
+  var tanggal = document.getElementById("tanggal");
+  if (tanggal) { tanggal.min = new Date().toISOString().slice(0, 10); }
+
+  function pilihLayanan(nilai) {
+    var select = document.getElementById("layanan");
+    select.value = nilai;
+    document.getElementById("booking-card").scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("nama").focus({ preventScroll: true });
+  }
+  document.querySelectorAll("[data-layanan]").forEach(function (btn) {
+    btn.addEventListener("click", function () { pilihLayanan(btn.getAttribute("data-layanan")); });
+  });
+
+  document.getElementById("booking").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var kode = "DEMO-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+    var hasil = document.getElementById("hasil");
+    hasil.style.display = "block";
+    hasil.innerHTML = "<strong>Janji demo tercatat di browser Anda saja.</strong><br>Kode demo: <strong>" + kode + "</strong><br>" +
+      document.getElementById("layanan").value + " · " + document.getElementById("tanggal").value +
+      "<br>Ini simulasi. Tidak ada pembayaran dan tidak ada data yang dikirim.";
+  });
+
+  var pertanyaan = [
+    { judul: "Untuk siapa layanan ini?", opsi: [["Saya sendiri", "Saya sendiri"], ["Anak saya", "Anak saya"], ["Orang tua atau keluarga", "Orang tua atau keluarga"]] },
+    { judul: "Yang paling kamu butuhkan saat ini?", opsi: [["umum", "Cek kesehatan umum"], ["gigi", "Masalah gigi"], ["imunisasi", "Imunisasi anak"]] },
+    { judul: "Kapan kamu butuh datang?", opsi: [["Secepatnya minggu ini", "Secepatnya minggu ini"], ["Minggu depan", "Minggu depan"], ["Masih cari info dulu", "Masih cari info dulu"]] }
+  ];
+  var jawaban = [];
+  var langkah = 0;
+  var elLangkah = document.getElementById("quiz-langkah");
+  var elJudul = document.getElementById("quiz-judul");
+  var elOpsi = document.getElementById("quiz-opsi");
+  var elKembali = document.getElementById("quiz-kembali");
+  var elTanya = document.getElementById("quiz-tanya");
+  var elHasil = document.getElementById("quiz-hasil");
+  var jumlahOrang = 1;
+  var layananTerpilih = null;
+
+  function tampilkanLangkah() {
+    elLangkah.textContent = "Langkah " + (langkah + 1) + " dari 3";
+    elJudul.textContent = pertanyaan[langkah].judul;
+    elOpsi.innerHTML = "";
+    pertanyaan[langkah].opsi.forEach(function (item) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = item[1];
+      b.addEventListener("click", function () {
+        jawaban[langkah] = item[0];
+        if (langkah < 2) { langkah++; tampilkanLangkah(); }
+        else { tampilkanHasil(); }
+      });
+      elOpsi.appendChild(b);
+    });
+    elKembali.hidden = langkah === 0;
+  }
+  elKembali.addEventListener("click", function () {
+    if (langkah > 0) { langkah--; tampilkanLangkah(); }
+  });
+  function tampilkanHasil() {
+    layananTerpilih = layananData[jawaban[1]] || layananData.umum;
+    jumlahOrang = 1;
+    elTanya.style.display = "none";
+    elHasil.style.display = "block";
+    renderHasil();
+  }
+  function renderHasil() {
+    var total = layananTerpilih.tarif * jumlahOrang;
+    elHasil.innerHTML =
+      "<p class=\"quiz-step\">Hasil untuk " + jawaban[0] + " · " + jawaban[2] + "</p>" +
+      "<h3>" + layananTerpilih.nama + "</h3>" +
+      "<p>" + layananTerpilih.dokter + "<br>" + layananTerpilih.jadwal + "</p>" +
+      "<p class=\"price\">Tarif demo: " + rupiah(layananTerpilih.tarif) + " per orang</p>" +
+      "<div class=\"counter\"><button type=\"button\" id=\"kurang\" aria-label=\"Kurangi jumlah orang\">-</button><strong id=\"label-jumlah\">" + jumlahOrang + " orang</strong><button type=\"button\" id=\"tambah\" aria-label=\"Tambah jumlah orang\">+</button></div>" +
+      "<p><strong>Estimasi demo: " + rupiah(total) + " untuk " + jumlahOrang + " orang.</strong><br><span class=\"fine\">Estimasi demo, bukan tagihan. Tarif demo tidak berubah.</span></p>" +
+      "<button class=\"btn-primary\" type=\"button\" id=\"ke-booking\">Buat janji untuk " + layananTerpilih.nama + "</button> " +
+      "<button class=\"quiz-back\" type=\"button\" id=\"ulang-kuis\">Ulangi kuis</button>";
+    document.getElementById("kurang").addEventListener("click", function () { if (jumlahOrang > 1) { jumlahOrang--; renderHasil(); } });
+    document.getElementById("tambah").addEventListener("click", function () { if (jumlahOrang < 4) { jumlahOrang++; renderHasil(); } });
+    document.getElementById("ke-booking").addEventListener("click", function () { pilihLayanan(layananTerpilih.pilih); });
+    document.getElementById("ulang-kuis").addEventListener("click", function () {
+      jawaban = []; langkah = 0; elHasil.style.display = "none"; elTanya.style.display = "block"; tampilkanLangkah();
+    });
+  }
+  tampilkanLangkah();
+
+  var reveal = document.querySelector(".reveal");
+  if (reveal && "IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) { if (entry.isIntersecting) { reveal.classList.add("in"); observer.disconnect(); } });
+    }, { threshold: 0.15 });
+    observer.observe(reveal);
+  } else if (reveal) { reveal.classList.add("in"); }
+})();
 </script>
 </body>
 </html>
