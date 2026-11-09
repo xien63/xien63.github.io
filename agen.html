@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Untuk Agen AI — Klinik Demo Sejahtera</title>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; color: #1c2733; line-height: 1.6; }
+  header { background: #0e5a4a; color: #fff; padding: 28px 20px; }
+  header h1 { margin: 0 0 6px; font-size: 1.5rem; }
+  .demo { background: #fff3cd; border-bottom: 3px solid #e0a800; padding: 12px 20px; font-weight: 600; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 20px 48px; }
+  h2 { color: #0e5a4a; margin-top: 32px; }
+  code { background: #f2f4f5; padding: 2px 6px; border-radius: 4px; }
+  pre { background: #f2f4f5; padding: 14px; border-radius: 8px; overflow-x: auto; }
+  footer { border-top: 1px solid #cfd8dc; padding: 20px; text-align: center; color: #546e7a; font-size: .9rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Untuk agen AI</h1>
+  <p>Yang bisa dilakukan agen pribadi di situs demo ini, lewat Personal Agent Protocol (Poppy) draft 0.1.</p>
+</header>
+<div class="demo">DEMO — Semua yang dijelaskan di halaman ini adalah simulasi. Tidak ada akun pasien, tidak ada pembayaran sungguhan.</div>
+<main>
+  <h2>1. Temukan klinik ini</h2>
+  <p>Baca dokumen discovery di <code>/.well-known/poppy.json</code>:</p>
+  <pre>https://xien63.github.io/.well-known/poppy.json</pre>
+  <p>Dokumen itu menyebutkan nama dan domain klinik, server sign-in (OAuth), serta rute yang tersedia: website dan satu API demo (OpenAPI).</p>
+
+  <h2>2. Periksa server sign-in</h2>
+  <p>Sebelum percaya pada dokumen discovery, agen memeriksa metadata OAuth di <code>/.well-known/oauth-authorization-server</code> pada issuer yang tercantum, lalu memastikan <code>issuer</code> cocok persis dan <code>poppy_domains</code> memuat domain klinik ini. Itu aturan dari spesifikasi draft 0.1 bagian 3.2.</p>
+
+  <h2>3. Pilih rute</h2>
+  <ul>
+    <li><strong>Website:</strong> jelajahi halaman ini sebagai pengunjung biasa, atau gabung ke sesi lewat <code>web.browser_session_endpoint</code> bila sudah sign-in.</li>
+    <li><strong>API demo:</strong> deskripsi OpenAPI di <code>openapi.json</code> menjelaskan jadwal dokter, pembuatan janji temu demo, dan pembayaran demo. Perhatian: di situs demo ini API-nya baru berupa dokumen, belum ada server API yang benar-benar berjalan. Menjalankannya adalah latihan lanjutan nomor 1 di panduan.</li>
+  </ul>
+
+  <h2>4. Buat janji temu demo</h2>
+  <p>Alurnya: pilih layanan dan dokter dari jadwal, buat janji temu dengan scope <code>appointments</code>, lalu terima kode demo seperti <code>DEMO-XXXXXX</code>. Di situs ini langkah itu disimulasikan lewat formulir di halaman utama.</p>
+
+  <h2>5. Pembayaran demo</h2>
+  <p>Draft 0.1 tidak mengatur pembayaran. Jalur pembayaran untuk agen diatur lewat ekstensi checkout UCP, yang masih berupa usulan komunitas dan bukan bagian spesifikasi resmi. Karena itu demo ini <strong>tidak</strong> mencantumkan ekstensi pembayaran di <code>poppy.json</code>. Menambahkannya adalah latihan lanjutan nomor 2 di panduan.</p>
+
+  <h2>Yang nyata dan yang simulasi</h2>
+  <ul>
+    <li><strong>Nyata:</strong> dokumen discovery <code>poppy.json</code>, metadata OAuth, deskripsi OpenAPI, dan halaman-halaman situs ini.</li>
+    <li><strong>Simulasi:</strong> sign-in (tidak ada server OAuth sungguhan), sesi dan token (tidak diterbitkan), pembuatan janji (hanya di browser), pembayaran (tidak ada).</li>
+  </ul>
+  <p><a href="index.html">← Kembali ke beranda demo</a></p>
+</main>
+<footer>
+  Klinik Demo Sejahtera — situs demo untuk latihan Personal Agent Protocol draft 0.1.
+</footer>
+</body>
+</html>
