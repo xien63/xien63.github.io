@@ -1,0 +1,1 @@
+{"authorization_endpoint":"https://xien63.github.io/oauth/authorize/","device_authorization_endpoint":"https://xien63.github.io/oauth/device/","issuer":"https://xien63.github.io/oauth","poppy_domains":["xien63.github.io"],"revocation_endpoint":"https://xien63.github.io/oauth/revoke/","token_endpoint":"https://xien63.github.io/oauth/token/"}
