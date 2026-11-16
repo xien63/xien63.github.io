@@ -1,0 +1,10 @@
+{
+  "resource": "https://xien63.github.io",
+  "authorization_servers": [
+    "https://xien63.github.io/oauth"
+  ],
+  "scopes_supported": [
+    "appointments",
+    "poppy:browser-sign-in"
+  ]
+}
