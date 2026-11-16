@@ -1,1 +1,27 @@
-{"authorization_endpoint":"https://xien63.github.io/oauth/authorize/","device_authorization_endpoint":"https://xien63.github.io/oauth/device/","issuer":"https://xien63.github.io/oauth","poppy_domains":["xien63.github.io"],"revocation_endpoint":"https://xien63.github.io/oauth/revoke/","token_endpoint":"https://xien63.github.io/oauth/token/"}
+{
+  "issuer": "https://xien63.github.io/oauth",
+  "authorization_endpoint": "https://xien63.github.io/oauth/authorize/",
+  "device_authorization_endpoint": "https://xien63.github.io/oauth/device/",
+  "token_endpoint": "https://xien63.github.io/oauth/token/",
+  "revocation_endpoint": "https://xien63.github.io/oauth/revoke/",
+  "grant_types_supported": [
+    "refresh_token",
+    "authorization_code",
+    "urn:ietf:params:oauth:grant-type:device_code"
+  ],
+  "scopes_supported": [
+    "appointments",
+    "poppy:browser-sign-in"
+  ],
+  "protected_resources": [
+    "https://xien63.github.io"
+  ],
+  "code_challenge_methods_supported": [
+    "S256"
+  ],
+  "token_endpoint_auth_signing_alg_values_supported": [
+    "ES256",
+    "PS384"
+  ],
+  "require_pushed_authorization_requests": false
+}
