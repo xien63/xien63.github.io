@@ -19,7 +19,7 @@
 <body>
 <header>
   <h1>Untuk agen AI</h1>
-  <p>Yang bisa dilakukan agen pribadi di situs demo ini, lewat Personal Agent Protocol (Poppy) draft 0.1.</p>
+  <p>Yang bisa dilakukan agen pribadi di situs demo ini, lewat Personal Agent Protocol (Poppy) 1.0.</p>
 </header>
 <div class="demo">DEMO — Semua yang dijelaskan di halaman ini adalah simulasi. Tidak ada akun pasien, tidak ada pembayaran sungguhan.</div>
 <main>
@@ -29,7 +29,7 @@
   <p>Dokumen itu menyebutkan nama dan domain klinik, server sign-in (OAuth), serta rute yang tersedia: website dan satu API demo (OpenAPI).</p>
 
   <h2>2. Periksa server sign-in</h2>
-  <p>Sebelum percaya pada dokumen discovery, agen memeriksa metadata OAuth di <code>/.well-known/oauth-authorization-server</code> pada issuer yang tercantum, lalu memastikan <code>issuer</code> cocok persis dan <code>poppy_domains</code> memuat domain klinik ini. Itu aturan dari spesifikasi draft 0.1 bagian 3.2.</p>
+  <p>Sebelum percaya pada dokumen discovery, agen memeriksa metadata OAuth di <code>/.well-known/oauth-authorization-server</code> pada issuer yang tercantum, lalu memastikan <code>issuer</code> cocok persis dan <code>protected_resources</code> di metadata issuer memuat domain klinik ini. Agen juga membaca metadata protected resource di <code>/.well-known/oauth-protected-resource</code>. Itu aturan dari spesifikasi 1.0 bagian 3.2.</p>
 
   <h2>3. Pilih rute</h2>
   <ul>
@@ -41,7 +41,7 @@
   <p>Alurnya: pilih layanan dan dokter dari jadwal, buat janji temu dengan scope <code>appointments</code>, lalu terima kode demo seperti <code>DEMO-XXXXXX</code>. Di situs ini langkah itu disimulasikan lewat formulir di halaman utama.</p>
 
   <h2>5. Pembayaran demo</h2>
-  <p>Draft 0.1 tidak mengatur pembayaran. Jalur pembayaran untuk agen diatur lewat ekstensi checkout UCP, yang masih berupa usulan komunitas dan bukan bagian spesifikasi resmi. Karena itu demo ini <strong>tidak</strong> mencantumkan ekstensi pembayaran di <code>poppy.json</code>. Menambahkannya adalah latihan lanjutan nomor 2 di panduan.</p>
+  <p>Poppy 1.0 tidak mengatur pembayaran. Pembayaran untuk agen didefinisikan oleh UCP (carts, checkouts, orders, payment), bukan oleh spesifikasi Poppy. Karena itu demo ini <strong>tidak</strong> mencantumkan ekstensi pembayaran di <code>poppy.json</code>. Menambahkannya adalah latihan lanjutan nomor 2 di panduan.</p>
 
   <h2>Yang nyata dan yang simulasi</h2>
   <ul>
@@ -51,7 +51,7 @@
   <p><a href="index.html">← Kembali ke beranda demo</a></p>
 </main>
 <footer>
-  Klinik Demo Sejahtera — situs demo untuk latihan Personal Agent Protocol draft 0.1.
+  Klinik Demo Sejahtera — situs demo untuk latihan Personal Agent Protocol 1.0.
 </footer>
 </body>
 </html>
