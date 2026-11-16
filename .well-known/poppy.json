@@ -1,1 +1,34 @@
-{"apis":[{"description":"Jadwal dokter, janji temu demo, dan pembayaran demo","type":"openapi","url":"https://xien63.github.io/openapi.json"}],"auth":{"custom_scopes":{"appointments":"Melihat dan membuat janji temu demo"},"device":{"scopes":["poppy:read","poppy:write"]},"direct":{"scopes":["poppy:read","poppy:write","appointments"]},"issuer":"https://xien63.github.io/oauth"},"organization":{"domain":"xien63.github.io","name":"Klinik Demo Sejahtera"},"protocol_version":"0.1","web":{"browser_session_endpoint":"https://xien63.github.io/poppy/browser-session/"}}
+{
+  "protocol_version": "1.0",
+  "organization": {
+    "name": "Klinik Demo Sejahtera",
+    "domain": "xien63.github.io"
+  },
+  "auth": {
+    "issuer": "https://xien63.github.io/oauth",
+    "scopes": {
+      "appointments": "Melihat dan membuat janji temu demo. Needed to create a demo appointment and to see demo bookings. Viewing the public doctor schedule does not need it.",
+      "poppy:browser-sign-in": "Use the website signed in, with the other access you approve. Needed only to browse the website signed in after sign-in; discovery and the public schedule work without it."
+    },
+    "scope_hints": {
+      "appointments": {
+        "changes": "irreversible",
+        "personal_data": true
+      },
+      "poppy:browser-sign-in": {
+        "changes": "none",
+        "personal_data": true
+      }
+    }
+  },
+  "web": {
+    "browser_session_endpoint": "https://xien63.github.io/poppy/browser-session/"
+  },
+  "apis": [
+    {
+      "type": "openapi",
+      "url": "https://xien63.github.io/openapi.json",
+      "description": "Jadwal dokter, janji temu demo, dan pembayaran demo"
+    }
+  ]
+}
